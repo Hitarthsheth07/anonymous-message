@@ -1,17 +1,18 @@
 import UserModel from '@/models/User';
 import { getServerSession } from 'next-auth/next';
-import dbConnect from '@/lib/dbconnect';
 import { User } from 'next-auth';
-import { Message } from '@/models/User';
-import { NextRequest } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/options';
+import mongoose from 'mongoose';
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { messageid: string } }
+  { params }: { params: { deleteMessageId: string } }
 ) {
-  const messageId = params.messageid;
-  await dbConnect();
+  const messageIdString = params.deleteMessageId;
+  console.log(`params: ${JSON.stringify(params)}`)
+  console.log(`messageID from param: ${messageIdString}`)
+  const messageId = new mongoose.Types.ObjectId(messageIdString);
+  
   const session = await getServerSession(authOptions);
   const _user: User = session?.user as User;
   if (!session || !_user) {
@@ -20,13 +21,15 @@ export async function DELETE(
       { status: 401 }
     );
   }
+  
+  console.log(`user: ${_user._id}`)
+  console.log(messageId)
 
   try {
     const updateResult = await UserModel.updateOne(
       { _id: _user._id },
       { $pull: { messages: { _id: messageId } } }
     );
-
     if (updateResult.modifiedCount === 0) {
       return Response.json(
         { message: 'Message not found or already deleted', success: false },

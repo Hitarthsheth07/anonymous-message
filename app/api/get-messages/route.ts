@@ -20,9 +20,24 @@ export async function GET(request: Request) {
   try {
     const user = await UserModel.aggregate([
       { $match: { _id: userId } },
-      { $unwind: '$messages' },
-      { $sort: { 'messages.createdAt': -1 } },
-      { $group: { _id: '$_id', messages: { $push: '$messages' } } },
+      {
+        $project: {
+          _id: 1,
+          hasMessages: { $cond: [{ $isArray: "$messages" }, { $size: "$messages" }, 0] },
+          messages: {
+            $cond: [
+              { $isArray: "$messages" },
+              {
+                $sortArray: { 
+                  input: "$messages", 
+                  sortBy: { createdAt: -1 } 
+                }
+              },
+              []
+            ]
+          }
+        }
+      }
     ]).exec();
 
     if (!user || user.length === 0) {
@@ -32,8 +47,15 @@ export async function GET(request: Request) {
       );
     }
 
+    if (user[0].hasMessages === 0) {
+      return Response.json(
+        { message: 'No messages found', success: true, messages: [] },
+        { status: 200 }
+      );
+    }
+
     return Response.json(
-      { messages: user[0].messages },
+      { messages: user[0].messages, success: true },
       {
         status: 200,
       }
