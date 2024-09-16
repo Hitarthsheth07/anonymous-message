@@ -23,13 +23,14 @@ export const authOptions: NextAuthOptions = {
         try {
           const user = await UserModel.findOne({
             $or: [
-              { email: credentials.identifier.email },
-              // No username feid in credentials param
-              { username: credentials.identifier.username },
+              { email: credentials.identifier },
+              // TODO: No username field in credentials param
+              { username: credentials.identifier },
             ],
           });
 
           if (!user) {
+            console.log(`user not found`)
             throw new Error("User not found");
           }
 
@@ -37,12 +38,18 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Please verify account first!");
           }
 
+          // console.log(`password in DB: ${user.password}`)
+          // console.log(`password by user: ${credentials.password}`)
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
             user.password
           );
+          console.log(`isPasswordCorrect: ${isPasswordCorrect}`)
 
           if (isPasswordCorrect) {
+            return user
+          }else{
+            throw new Error('Incorrect password!')
           }
         } catch (err: any) {
           throw new Error(err);
@@ -58,16 +65,17 @@ export const authOptions: NextAuthOptions = {
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.username = user.username;
+        token.email = user.email
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        // TODO: session.user is not suggesting KV pairs
         session.user._id = token._id;
         session.user.isVerified = token.isVerified;
         session.user.isAcceptingMessages = token.isAcceptingMessages;
         session.user.username = token.username;
+        session.user.email = token.email;
       }
       return session;
     },

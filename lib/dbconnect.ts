@@ -1,3 +1,5 @@
+'use server'
+
 import mongoose from "mongoose";
 
 type ConnectionObject = {   
@@ -8,7 +10,7 @@ const connection: ConnectionObject = {}
 
 async function dbconnect (): Promise<void> {
   if(connection.isConnected){
-    console.log('connected to database');
+    console.log('Already Connected to database!');
     return
   }
 

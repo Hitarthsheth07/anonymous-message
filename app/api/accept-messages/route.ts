@@ -8,9 +8,7 @@ export async function POST(req: Request) {
   await dbconnect();
 
   const session = await getServerSession(authOptions);
-  // TODO: code changed
-  // const user: User = session?.user as User;
-  const user: User = session?.user;
+  const user: User = session?.user as User;
 
   // (!session || !session.user)
   if (!session || !user) {
@@ -24,13 +22,13 @@ export async function POST(req: Request) {
   }
 
   const userId = user._id;
-  const { isAcceptingMessages } = user;
+  const { isAcceptingMessages } = await req.json();
 
   try {
     const updatedUser = UserModel.findByIdAndUpdate(
       userId,
       { isAcceptingMessages },
-      { new: true }
+      { new: true } // returns the updated user
     );
 
     if (!updatedUser) {
@@ -52,7 +50,7 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error updating message status");
+    // console.log("Error updating message status");
     {
       return Response.json(
         {
@@ -69,9 +67,7 @@ export async function GET(req: Request) {
   await dbconnect();
 
   const session = await getServerSession(authOptions);
-  // TODO: code changed
-  // const user: User = session?.user as User;
-  const user: User = session?.user;
+  const user: User = session?.user as User;
 
   // (!session || !session.user)
   if (!session || !user) {
@@ -89,7 +85,7 @@ export async function GET(req: Request) {
 try {
     const foundUser = await UserModel.findById(userId)
     if(!foundUser){
-      console.log("Cannot find User");
+      // console.log("Cannot find User");
       return Response.json(
           {
             success: false,
@@ -107,7 +103,7 @@ try {
       { status: 200 }
     );
 } catch (error) {
-    console.log("Error fetching message status");
+    // console.log("Error fetching message status");
     {
       return Response.json(
         {

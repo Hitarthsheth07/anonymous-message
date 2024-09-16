@@ -25,12 +25,11 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 
 const page = () => {
-  const [username, setusername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debouncedUsername, setdebouncedUsername] = useDebounceValue(
-    username,
+    '',
     300
   );
 
@@ -75,7 +74,7 @@ const page = () => {
     try {
       const response = await axios.post("/api/sign-up", data);
       toast({ title: "Success", description: response.data.message });
-      router.replace(`/verify/${username}`);
+      router.replace(`/verify/${debouncedUsername}`);
       setIsSubmitting(false);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
@@ -114,6 +113,18 @@ const page = () => {
                       }}
                     />
                   </FormControl>
+                  {isCheckingUsername && <Loader2 className="animate-spin" />}
+                  <p
+                    className={`text-sm ${
+                      usernameMessage == "Username is available"
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }`}
+                  >
+                    {usernameMessage == "Username is available"
+                      ? `Great Username 😉`
+                      : usernameMessage}
+                  </p>
                   <FormDescription>
                     This is your public display name.
                   </FormDescription>
