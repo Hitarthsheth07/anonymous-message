@@ -15,7 +15,7 @@ async function dbconnect (): Promise<void> {
   }
 
   try {
-    const db = await mongoose.connect('mongodb://localhost:27017/AnonomousMessage')
+    const db = await mongoose.connect(process.env.MONGO_DB_URI)
 
     connection.isConnected = db.connections[0].readyState
   } catch (error) {
