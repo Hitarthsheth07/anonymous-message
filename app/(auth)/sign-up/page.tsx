@@ -24,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 
-const page = () => {
+export default function SignUpForm () {
   const [usernameMessage, setUsernameMessage] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -189,5 +189,3 @@ const page = () => {
     </div>
   );
 };
-
-export default page;

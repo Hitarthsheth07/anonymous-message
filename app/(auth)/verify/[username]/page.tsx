@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ApiResponse } from "@/lib/types/ApiResponse";
 
-const verifyAccount = () => {
+export default function verifyAccount () {
   const router = useRouter();
   const params = useParams<{ username: string }>();
   const {toast} = useToast();
@@ -84,4 +84,3 @@ const verifyAccount = () => {
   </div>
 )}
 
-export default verifyAccount
