@@ -2,6 +2,7 @@
 import UserModel from "@/models/User";
 import bcrypt from "bcrypt";
 import dbconnect from "@/lib/dbconnect";
+import { sendVerificationEmail } from "@/lib/helpers/sendVerifiationEmail";
 
 export async function POST(request: Request) {
   await dbconnect();
@@ -59,27 +60,27 @@ export async function POST(request: Request) {
     await newUser.save();
   }
 
-  // const emailResponse = await sendVerificationEmail(
-  //   email,
-  //   username,
-  //   verifyCode
-  // );
+  const emailResponse = await sendVerificationEmail(
+    email,
+    username,
+    verifyCode
+  );
 
-  // if (!emailResponse.success) {
-  //   return Response.json(
-  //     {
-  //       success: false,
-  //       message: emailResponse.message,
-  //     },
-  //     { status: 500 }
-  //   );
-  // } else {
-  //   return Response.json(
-  //     {
-  //       success: true,
-  //       message: "User registered successfully, please verify your email",
-  //     },
-  //     { status: 201 }
-  //   );
-  // }
+  if (!emailResponse.success) {
+    return Response.json(
+      {
+        success: false,
+        message: emailResponse.message,
+      },
+      { status: 500 }
+    );
+  } else {
+    return Response.json(
+      {
+        success: true,
+        message: "User registered successfully, please verify your email",
+      },
+      { status: 201 }
+    );
+  }
 }
