@@ -36,16 +36,16 @@ export default function VerifyAccount () {
         code: data.code,
       });
 
-      toast({title: "Success", description: response.data.message})
+      // toast({title: "Success", description: response.data.message})
       router.replace('/sign-in')
     } catch (error) {
       // console.log('Error in veryfying code', error);
       const axiosError = error as AxiosError<ApiResponse>;
-      toast({
-        title: "Sign Up fail",
-        description: axiosError.response?.data.message,
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Sign Up fail",
+      //   description: axiosError.response?.data.message,
+      //   variant: "destructive",
+      // });
     }
   };
   return (
