@@ -4,7 +4,8 @@ import React from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { verifySchema } from "@/schemas/verifySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import {redirect} from 'next/navigation'
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import * as z from "zod";
@@ -22,24 +23,24 @@ import { Input } from "@/components/ui/input";
 import { ApiResponse } from "@/lib/types/ApiResponse";
 
 export default function VerifyAccount () {
-  const router = useRouter();
+  // const router = useRouter();
   const params = useParams<{ username: string }>();
-  const {toast} = useToast();
+  // const {toast} = useToast();
 
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
   });
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     try {
-      const response = await axios.post("/api/verifyCode", {
+      await axios.post("/api/verifyCode", {
         username: params.username,
         code: data.code,
       });
 
       // toast({title: "Success", description: response.data.message})
-      router.replace('/sign-in')
+      redirect('/sign-in')
     } catch (error) {
-      // console.log('Error in veryfying code', error);
+      console.log('Error in veryfying code', error);
       const axiosError = error as AxiosError<ApiResponse>;
       // toast({
       //   title: "Sign Up fail",
