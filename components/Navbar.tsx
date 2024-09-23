@@ -10,7 +10,7 @@ const Navbar = () => {
   const { data: session } = useSession();
   return (
     <nav className="p-2 md:p-4 shadow-md">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items=center">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items=center font-bold font-xl">
         <a href="/" className="text-xl mb-4 md:mb-0">
           Anonomous Message
         </a>

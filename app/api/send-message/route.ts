@@ -5,6 +5,7 @@ import { Message } from "@/models/User";
 export async function POST(req: Request) {
   await dbconnect();
   const { username, content } = await req.json();
+  console.log(`username: ${username}`)
 
   try {
     const user = await UserModel.findOne({ username });
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
         success: true,
         message: "Message successfully sent",
       },
-      { status: 500 }
+      { status: 200 }
     );
   } catch (error) {
     console.log("Error sending messages", error);
