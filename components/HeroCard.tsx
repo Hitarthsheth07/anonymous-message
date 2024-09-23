@@ -13,6 +13,7 @@ import { Check, Linkedin } from "lucide-react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { LightBulbIcon } from "./ui/Icons";
 import Link from "next/link";
+import Image from "next/image";
 
 export const HeroCards = () => {
   return (
@@ -34,15 +35,16 @@ export const HeroCards = () => {
           </div>
         </CardHeader>
 
-        <CardContent>I love using this app! It's awesome!</CardContent>
+        <CardContent>I love using this app! Its awesome!</CardContent>
       </Card>
 
       {/* Team */}
       <Card className="absolute right-[20px] top-4 w-80 flex flex-col justify-center items-center drop-shadow-xl shadow-black/10 dark:shadow-white/10">
         <CardHeader className="mt-8 flex justify-center items-center pb-2">
-          <img
+          <Image
             src="https://media.licdn.com/dms/image/v2/D4E03AQE-aKIyL9Dxzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1726585123077?e=1732752000&v=beta&t=RGZkaoxpK-Crgoa-KQSWarfRO1tIaWskZAAkax6TIlY"
             className="absolute grayscale-[0%] -top-12 rounded-full w-24 h-24 aspect-square object-cover"
+            alt="profile-picture"
           />
           <CardTitle className="text-center"> Hitarth Sheth</CardTitle>
           <CardDescription className="font-normal text-primary">
