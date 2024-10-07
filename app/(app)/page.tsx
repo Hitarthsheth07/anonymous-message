@@ -27,9 +27,12 @@ export default function Home () {
           Send an anonymous message to anyone, all you need is their Username
         </p>
 
-        <div className="space-y-4 md:space-y-0 md:space-x-4">
+        <div className="space-y-4 md:space-y-0 md:space-x-">
           <Link href='/send-message'>
-            <Button className="w-full md:w-1/3">Send Message</Button>
+            <Button className="w-full md:w-1/3">Send message</Button>
+          </Link>
+          <Link href='/sign-in' className="ml-4">
+            <Button className="w-full md:w-1/3" variant={"outline"}>Demo</Button>
           </Link>
         </div>
       </div>
