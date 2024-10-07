@@ -28,7 +28,7 @@ export default function Home () {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Link href='/sign-up'>
+          <Link href='/send-message'>
             <Button className="w-full md:w-1/3">Send Message</Button>
           </Link>
         </div>

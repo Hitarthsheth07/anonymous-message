@@ -45,6 +45,8 @@ export const HeroCards = () => {
             src="https://media.licdn.com/dms/image/v2/D4E03AQE-aKIyL9Dxzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1726585123077?e=1732752000&v=beta&t=RGZkaoxpK-Crgoa-KQSWarfRO1tIaWskZAAkax6TIlY"
             className="absolute grayscale-[0%] -top-12 rounded-full w-24 h-24 aspect-square object-cover"
             alt="profile-picture"
+            width={96}
+            height={96}
           />
           <CardTitle className="text-center"> Hitarth Sheth</CardTitle>
           <CardDescription className="font-normal text-primary">

@@ -104,7 +104,7 @@ export default function SignInForm() {
                   <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter you username"
+                      placeholder="Try 'demoUser'"
                       {...field}
                     />
                   </FormControl>
@@ -119,7 +119,7 @@ export default function SignInForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password" {...field} type="password" />
+                    <Input placeholder="Try 'password@1234'" {...field} type="password"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

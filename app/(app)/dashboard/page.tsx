@@ -55,6 +55,7 @@ function UserDashboard() {
     }
   }, [setValue, toast]);
 
+  // console.log(`current value of switch: ${acceptMessages}`)
   const fetchMessages = useCallback(
     async (refresh: boolean = false) => {
       setIsLoading(true);
@@ -96,8 +97,9 @@ function UserDashboard() {
   // Handle switch change
   const handleSwitchChange = async () => {
     try {
+      // console.log(`setting accept message to: ${!acceptMessages}`);
       const response = await axios.post<ApiResponse>('/api/accept-messages', {
-        acceptMessages: !acceptMessages,
+        isAcceptingMessages: !acceptMessages,
       });
       setValue('acceptMessages', !acceptMessages);
       toast({
@@ -106,6 +108,7 @@ function UserDashboard() {
       });
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
+      console.log(`error changing acceptMessage: ${JSON.stringify(axiosError.response)}`)
       toast({
         title: 'Error',
         description:
